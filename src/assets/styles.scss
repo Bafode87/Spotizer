@@ -1,0 +1,108 @@
+@import './base.css';
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-background);
+  font-family: var(--font-family);
+}
+
+
+// Main component
+
+nav {
+  position:sticky;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  background-color: var(--color-background);
+  opacity: 0.95;
+}
+
+.menu > a {
+  text-decoration: none;
+}
+
+.menu {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  padding: var(--spacing-1);
+}
+
+.menu__item {
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &--active {
+      color: orange;
+    }
+  }
+  
+.menu__item--active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// Home component
+
+.main__home {
+  padding: var(--spacing-1);
+  color: var(--color-text);
+}
+
+h1 {
+  font-family: var(--font-family-h1);
+  font-size: var(--font-size-h1);
+  text-align: center;
+  color: var(--color-text);
+
+  & > span {
+    color: orange;
+  }
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+  margin: var(--spacing-2) 0;
+}
+
+// Carroussel component
+
+.carroussel {
+  padding: 0 var(--spacing-2);
+  color: var(--color-text);
+}
+
+.carroussel__container{
+  display: flex;
+  gap: var(--spacing-2);
+  overflow-x: scroll;
+  padding: var(--spacing-1);
+}
+
+.item a {
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.carroussel__container::-webkit-scrollbar {
+  background-color: var(--color-background);
+  height: 8px;
+
+}
+
+.carroussel__container::-webkit-scrollbar-thumb {
+  background-color: orange;
+  border-radius: 5px;
+}
+
+.artist__name {
+  text-align: center;
+}

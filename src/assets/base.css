@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Bahiana&display=swap');
+
+/* semantic color variables for this project */
+:root {
+  --color-background: #111111;
+  --color-text: white;
+
+  --font-family: 'ABeeZee', sans-serif;
+  --font-family-h1: 'Bahiana', cursive;
+
+  --font-size-h1: 2.5em;
+  --font-size-h2: 1.5em;
+  --font-size-h3: 1em;
+
+  --spacing-1: 0.5em;
+  --spacing-2: 1em;
+
+
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+
+}
