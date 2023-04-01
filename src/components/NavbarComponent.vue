@@ -1,15 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HomeComponent from './HomeComponent.vue';
 </script>
 
 <template>
-    <Suspense>
-        <div v-if="$route.path === '/home'">
-            <HomeComponent />
-        </div>
-    </Suspense>
-
     <nav>
         <RouterView>
             <ul class="menu">
@@ -40,7 +33,7 @@ import HomeComponent from './HomeComponent.vue';
             </ul>
         </RouterView>
     </nav>
-    <!-- <RouterLink to="/about">About</RouterLink> -->
+
     <symbol style="display: none">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="currentColor" id="iconHome">
             <path

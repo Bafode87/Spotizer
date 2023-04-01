@@ -1,9 +1,13 @@
 <script setup>
-import MainComponent from './components/MainComponent.vue';
+import HomeView from './views/HomeView.vue';
 
 </script>
 
 <template>
-  <MainComponent />
+    <Suspense>
+        <div v-if="$route.path === '/'">
+            <HomeView />
+        </div>
+    </Suspense>
 </template>
 
