@@ -1,5 +1,5 @@
 <script setup>
-import CarrousselComponent from './../components/CarrousselComponent.vue';
+import CardListComponent from '../components/CardListComponent.vue';
 import NavbarComponent from './../components/NavbarComponent.vue'
 
 async function getAlbums() {
@@ -24,6 +24,8 @@ const artists = await getArtists();
 const pathOfAlbums = '/albums/';
 const pathOfArtists = '/artists/';
 
+const image = './src/assets/user.svg'
+
 
 </script>
 
@@ -34,16 +36,9 @@ const pathOfArtists = '/artists/';
     <main class="main__home">
         <h2>Accueil</h2>
         <h3>Albums</h3>
-        <CarrousselComponent :data="albums" :path="pathOfAlbums" />
+        <CardListComponent :data="albums" :detailPath="pathOfAlbums" />
         <h3>Artistes</h3>
-        <CarrousselComponent :data="artists" :path="pathOfArtists">
-            <template #image>
-                <img src="./../assets/user.svg" alt="Image de l'artiste" width="100" height="100">
-            </template>
-            <template #name="{ item }">
-                <p class="artist__name">{{ item.name }}</p>
-            </template>
-        </CarrousselComponent>
+        <CardListComponent :data="artists" :detailPath="pathOfArtists" :image="image" />
         <h3>Playlists</h3>
     </main>
     <NavbarComponent />
