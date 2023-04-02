@@ -6,7 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <nav>
         <RouterView>
             <ul class="menu">
-                <RouterLink to="/home">
+                <RouterLink to="/">
                     <li class="menu__item--active">
                         <svg width="32" height="32">
                             <use xlink:href="#iconHome" />

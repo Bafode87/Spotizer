@@ -1,3 +1,13 @@
+<template>
+    <section class="cardList">
+        <div :class="styleOrientation" >
+            <div class="cardList__items" v-for="item in props.data" :key="item.id">
+                <CardComponent :item="item" :detailPath="detailPath" />
+            </div>
+        </div>
+    </section>
+</template>
+
 <script setup>
 
 import CardComponent from './CardComponent.vue';
@@ -8,28 +18,21 @@ const props = defineProps({
         required: true
     },
     detailPath: {
-        type: String,
-        required: true
+        type: String
     },
     image: {
+        type: String
+    },
+    orientation: {
         type: String
     }
 });
 
 
-</script>
+let styleOrientation = 'cardList__container';
 
-<template>
-    <section class="carroussel">
-        <div class="carroussel__container">
-            <div class="carroussel__items" v-for="item in props.data" :key="item.id">
-                <CardComponent v-if="!item.image" :item="item" :detailPath="detailPath">
-                    <template #image>
-                        <img :src="props.image" alt="Image de l'item" width="100" height="100">
-                    </template>
-                </CardComponent>
-                <CardComponent v-else :item="item" :detailPath="detailPath" />
-            </div>
-        </div>
-    </section>
-</template>
+if (props.orientation) {
+    styleOrientation = `cardList__container--${props.orientation}`
+}
+
+</script>

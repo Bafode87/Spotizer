@@ -1,21 +1,30 @@
 @import './base.css';
 
 body {
+  display: flex;
   min-height: 100vh;
-  background-color: var(--color-background);
   font-family: var(--font-family);
+  justify-content: center;
+  background-color: grey;
 }
 
+#app {
+  width: 415px;
+  position: relative;
+  background-color: var(--color-background);
+}
 
 // Main component
 
 nav {
-  position:sticky;
+  position:fixed;
   bottom: 0;
   width: 100%;
   height: 70px;
   background-color: var(--color-background);
-  opacity: 0.95;
+  opacity: 0.99;
+  border-top: 0.5px solid white;
+  width: 415px;
 }
 
 .menu > a {
@@ -46,18 +55,21 @@ nav {
   align-items: center;
 }
 
-// Home component
+// Home view
 
 .main__home {
   padding: var(--spacing-1);
   color: var(--color-text);
+  margin-bottom: 70px;
 }
 
 h1 {
+  padding: 0.4em;
   font-family: var(--font-family-h1);
   font-size: var(--font-size-h1);
   text-align: center;
   color: var(--color-text);
+
 
   & > span {
     color: orange;
@@ -73,36 +85,103 @@ h3 {
   margin: var(--spacing-2) 0;
 }
 
-// Carroussel component
+// cardList component
 
-.carroussel {
+.cardList {
   padding: 0 var(--spacing-2);
   color: var(--color-text);
 }
 
-.carroussel__container{
+.loading {
+  min-height: 165px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.cardList__container{
   display: flex;
   gap: var(--spacing-2);
   overflow-x: scroll;
   padding: var(--spacing-1);
+
+  &--vertical {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+  }
 }
 
 .item a {
-  text-decoration: none;
-  color: var(--color-text);
+    text-decoration: none;
+  // text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    color: var(--color-text);
+    gap: 1em;
 }
 
-.carroussel__container::-webkit-scrollbar {
+.cardList__container::-webkit-scrollbar {
   background-color: var(--color-background);
   height: 8px;
 
 }
 
-.carroussel__container::-webkit-scrollbar-thumb {
+.cardList__container::-webkit-scrollbar-thumb {
   background-color: orange;
   border-radius: 5px;
 }
 
-.artist__name {
-  text-align: center;
+// Artist detail view
+
+.main__artist {
+  padding: var(--spacing-1);
+  color: var(--color-text);
+}
+
+.artist__header {
+  margin-top: 70px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.artist__info {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  justify-content: center;
+  gap: 1em;
+}
+
+// Refresh icon
+.refreshIcon {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  color: orange;
+}
+
+// Back icon
+.backIcon {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  color: orange;
+}
+
+// Upward icon
+.upwardIcon {
+  z-index: 10;
+  position:sticky;
+  bottom: 40px;
+  float: right;
+  color: orange;
+  opacity: 0;
+
+  &.show {
+    opacity: 1;
+  }
 }
