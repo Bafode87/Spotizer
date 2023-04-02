@@ -113,9 +113,8 @@ h3 {
   }
 }
 
-.item a {
+.cardList .item a {
     text-decoration: none;
-  // text-align: center;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -134,6 +133,23 @@ h3 {
   background-color: orange;
   border-radius: 5px;
 }
+
+// List component
+
+.list {
+  color: white;
+}
+
+.list .item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em;
+}
+
+.list .item__subtitle {
+  font-size: 0.8em;
+}
+
 
 // Artist detail view
 
@@ -154,6 +170,32 @@ h3 {
   color: white;
   justify-content: center;
   gap: 1em;
+}
+
+// Album detail
+
+.header__albumDetail {
+  margin-top: 70px;
+  color: white;
+  padding: var(--spacing-1);
+}
+
+.image__albumDetail {
+  display: flex;
+  justify-content: center;
+}
+
+.info__albumDetail {
+  display: flex;
+  align-items: center;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  gap: 0.5em;
+}
+
+.main__album {
+  padding: var(--spacing-1);
+  margin-top: 2em;
 }
 
 // Refresh icon

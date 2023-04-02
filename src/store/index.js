@@ -25,7 +25,8 @@ const state = {
         detailPath: DETAIL_PATH.ARTIST,
         items: []
     },
-    artistDetail: []
+    artistDetail: new Map(),
+    albumDetail: new Map()
 
 }
 
@@ -81,10 +82,26 @@ const actions = {
             console.log(err)
         }
     },
+    async fetchAlbumDetail(id) {
+        try {
+            const response = await fetch(`${ROUTES.ALBUM}/${id}`);
+            const album = await response.json();
+            const artist = await this.fetchArtistDetail(album.artist.id);
+
+            album.artist.image = '/src/assets/user.svg';
+            album.artist.name = artist.name;
+
+            return album;
+        }
+        catch (err) {
+            console.log(err);
+        }
+
+    },
     async fetchAlbum(path) {
         try {
             const response = await fetch(path);
-            const album = await response.json()
+            const album = await response.json();
             return album
         }
         catch (err) {
@@ -118,8 +135,12 @@ const store = {
     get artistToDiscover () { 
         return state.artistsToDiscover 
     },
-    get artistDetail () {
-        return state.artistDetail;
+    getArtistDetail({ id }) {
+        return state.artistDetail.get(id);
+    },
+    getAlbumDetail({ id }) {
+
+        return state.albumDetail.get(id)
     },
     async INITIALIZE_HOME() {
 
@@ -134,11 +155,15 @@ const store = {
             ])
         }
     },
-    async INITIALIZE_ARTIST_DETAIL(id) {
-        console.log(id, state.artistDetail[0]?.id);
-        if (id !== state.artistDetail[0]?.id) {
-          state.artistDetail = [];
-        state.artistDetail.push(await actions.fetchArtistDetail(id));  
+    async INITIALIZE_ARTIST_DETAIL({ id }) {
+        if (!state.artistDetail.has(id)) {
+            state.artistDetail.set(id, await actions.fetchArtistDetail(id)); 
+        }
+        
+    },
+    async INITIALIZE_ALBUM_DETAIL({ id }) {
+        if (!state.albumDetail.has(id)) {
+            state.albumDetail.set(id, await actions.fetchAlbumDetail(id));
         }
         
     }

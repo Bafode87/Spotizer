@@ -23,7 +23,6 @@ const props = defineProps({
 onMounted(() => {
     const arrow = document.querySelector('.upwardIcon');
 
-    console.log(arrow);
 
     window.addEventListener('scroll',() => {
     if (window.scrollY > props.showPosition) {
