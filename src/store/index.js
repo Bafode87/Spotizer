@@ -32,8 +32,7 @@ const actions = {
     async fetchAlbumsMostRecent() {
         try {
             const response = await fetch(`${ROUTES.ALBUM}?page=1`);
-            const albums = await response.json();
-            return albums;
+            return await response.json();
         }
         catch (err) {
             console.log(err);
@@ -69,7 +68,7 @@ const actions = {
             for(let song of artist.songs.slice(0, 3)) {
                 songs.push(await this.fetchSong(`${URI_BASE}${song}`))
             }
-    
+
             artist.albums = albums
             artist.songs = songs
 
@@ -86,7 +85,7 @@ const actions = {
             const album = await response.json();
             const artist = await this.fetchArtistDetail(album.artist.id);
 
-            album.artist.image = '/src/assets/user.svg';
+            album.artist.image = './src/assets/user.svg';
             album.artist.name = artist.name;
 
             return album;
@@ -99,8 +98,7 @@ const actions = {
     async fetchAlbum(path) {
         try {
             const response = await fetch(path);
-            const album = await response.json();
-            return album
+            return await response.json()
         }
         catch (err) {
             console.log(err);
@@ -121,18 +119,17 @@ const actions = {
         const id = youtube.split('/')[4]
         const response = await fetch(`${URI_YOUTUBE_THUMBNAIL}${id}/0.jpg`)
         console.log(response);
-        const uri_thumbnail =  response.url;
-        return uri_thumbnail
+        return response.url
 
     }
 }
 
 const store = {
     get albumsMostRecent () {
-        return state.albumsMostRecent 
+        return state.albumsMostRecent
     },
-    get artistToDiscover () { 
-        return state.artistsToDiscover 
+    get artistToDiscover () {
+        return state.artistsToDiscover
     },
     get detailPath () {
         return state.detailPath;
@@ -159,15 +156,15 @@ const store = {
     },
     async INITIALIZE_ARTIST_DETAIL({ id }) {
         if (!state.artistDetail.has(id)) {
-            state.artistDetail.set(id, await actions.fetchArtistDetail(id)); 
+            state.artistDetail.set(id, await actions.fetchArtistDetail(id));
         }
-        
+
     },
     async INITIALIZE_ALBUM_DETAIL({ id }) {
         if (!state.albumDetail.has(id)) {
             state.albumDetail.set(id, await actions.fetchAlbumDetail(id));
         }
-        
+
     }
 }
 
