@@ -17,16 +17,14 @@ const DETAIL_PATH = {
 }
 
 const state = {
-    albumsMostRecent: {
-        detailPath: DETAIL_PATH.ALBUM,
-        items: []
-    },
-    artistsToDiscover: {
-        detailPath: DETAIL_PATH.ARTIST,
-        items: []
-    },
+    albumsMostRecent: [],
+    artistsToDiscover: [],
     artistDetail: new Map(),
-    albumDetail: new Map()
+    albumDetail: new Map(),
+    detailPath: {
+        album: DETAIL_PATH.ALBUM,
+        artist: DETAIL_PATH.ARTIST
+    }
 
 }
 
@@ -135,6 +133,9 @@ const store = {
     get artistToDiscover () { 
         return state.artistsToDiscover 
     },
+    get detailPath () {
+        return state.detailPath;
+    },
     getArtistDetail({ id }) {
         return state.artistDetail.get(id);
     },
@@ -144,13 +145,13 @@ const store = {
     },
     async INITIALIZE_HOME() {
 
-        if (state.albumsMostRecent.items.length === 0) {
+        if (state.albumsMostRecent.length === 0) {
             await Promise.all([
                 actions.fetchAlbumsMostRecent().then((albums) => {
-                    state.albumsMostRecent.items = albums;
+                    state.albumsMostRecent = albums;
                 }),
                 actions.fetchArtistsToDiscover().then((artists) => {
-                    state.artistsToDiscover.items = artists;
+                    state.artistsToDiscover = artists;
                 })
             ])
         }

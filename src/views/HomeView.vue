@@ -37,9 +37,11 @@
 
     await store.INITIALIZE_HOME();
 
-    const albums = store.albumsMostRecent.items;
-    const artists = store.artistToDiscover.items;
-    const pathOfAlbums = store.albumsMostRecent.detailPath;
-    const pathOfArtists = store.artistToDiscover.detailPath;
+    const albums = store.albumsMostRecent;
+    const artists = store.artistToDiscover;
+
+    console.log(store);
+    const pathOfAlbums = store.detailPath.album;
+    const pathOfArtists = store.detailPath.artist;
 
 </script>

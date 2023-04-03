@@ -4,7 +4,10 @@
             <img :src="album.image" width="200" height="200"> 
         </div>
         <div class="info__albumDetail">
-            <img :src="album.artist.image" width="45" height="45">
+            <RouterLink :to='`${pathOfArtist}${album.artist.id}`'>
+                <img :src="album.artist.image" width="45" height="45">
+            </RouterLink>
+            
             <div>
                 <p><strong>{{ album.title }}</strong> - {{ album.artist.name }}</p>
             </div>
@@ -28,8 +31,7 @@ const route = useRoute()
 
 await store.INITIALIZE_ALBUM_DETAIL(route.params);
 const album = store.getAlbumDetail(route.params);
-console.log(album);
 
-
+const pathOfArtist = store.detailPath.artist;
 
 </script>
