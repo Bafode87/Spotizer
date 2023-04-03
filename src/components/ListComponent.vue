@@ -31,5 +31,4 @@
         }
     })
 
-console.log(props);
 </script>

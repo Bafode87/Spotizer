@@ -34,7 +34,6 @@ const route = useRoute()
 
 await store.INITIALIZE_ARTIST_DETAIL(route.params);
 const artist = store.getArtistDetail(route.params);
-
 const pathOfAlbums = store.detailPath.album;
 
 

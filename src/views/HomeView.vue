@@ -40,7 +40,6 @@
     const albums = store.albumsMostRecent;
     const artists = store.artistToDiscover;
 
-    console.log(store);
     const pathOfAlbums = store.detailPath.album;
     const pathOfArtists = store.detailPath.artist;
 

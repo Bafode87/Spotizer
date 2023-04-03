@@ -7,7 +7,7 @@ const ROUTES = {
 
 const URI_BASE = 'https://mmi.unilim.fr/';
 
-const URI_YOUTUBE_THUMBNAIL = 'http://img.youtube.com/vi/'
+const URI_YOUTUBE_THUMBNAIL = 'https://img.youtube.com/vi/'
 
 const DETAIL_PATH = {
     ALBUM: '/albums/',
@@ -120,6 +120,7 @@ const actions = {
     async fetchThumbnail({youtube}) {
         const id = youtube.split('/')[4]
         const response = await fetch(`${URI_YOUTUBE_THUMBNAIL}${id}/0.jpg`)
+        console.log(response);
         const uri_thumbnail =  response.url;
         return uri_thumbnail
 
