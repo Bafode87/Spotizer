@@ -44,7 +44,7 @@ const actions = {
             const response = await fetch(`${ROUTES.ARTIST}?page=1`);
             const artists = await response.json();
             artists.forEach((artist) => {
-                artist.image = './src/assets/user.svg';
+                artist.image = '/Spotizer/images/user.svg';
             })
 
             return artists;
@@ -57,7 +57,7 @@ const actions = {
         try {
             const response =  await fetch(`${ROUTES.ARTIST}/${id}`)
             const artist = await response.json();
-            artist.image = '/src/assets/user.svg';
+            artist.image = '/Spotizer/images/user.svg';
             const albums = []
             const songs = []
 
@@ -85,7 +85,7 @@ const actions = {
             const album = await response.json();
             const artist = await this.fetchArtistDetail(album.artist.id);
 
-            album.artist.image = './src/assets/user.svg';
+            album.artist.image = '/Spotizer/images/user.svg';
             album.artist.name = artist.name;
 
             return album;
