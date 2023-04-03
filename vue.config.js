@@ -5,6 +5,5 @@ module.exports = {
         additionalData: `@import "@/assets/styles.scss";`,
       },
     },
-  },
-  publicPath: './'
+  }
 };
