@@ -1,10 +1,10 @@
 <template>
     <div class="item">
-        <RouterLink :to="`${props.detailPath}${props.item.id}`">
+        <router-link :to="`${props.detailPath}${props.item.id}`">
             <img :src="props.item.image" alt="Image de l'item" width="100" height="100">
             <p v-if="props.item.title">{{ props.item.title }}</p>
             <p v-else>{{ props.item.name }}</p>
-        </RouterLink>
+        </router-link>
     </div>
 </template>
 

@@ -1,37 +1,33 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
 
 <template>
     <nav>
-        <RouterView>
             <ul class="menu">
-                <RouterLink to="/">
+                <router-link to="/">
                     <li class="menu__item--active">
                         <svg width="32" height="32">
                             <use xlink:href="#iconHome" />
                         </svg>
                         <p>Accueil</p>
                     </li>
-                </RouterLink>
-                <RouterLink to="search">
+                </router-link>
+                <router-link to="/search">
                     <li class="menu__item">
                         <svg width="32" height="32">
                             <use xlink:href="#iconSearch" />
                         </svg>
                         <p>Recherche</p>
                     </li>
-                </RouterLink>
-                <RouterLink to="playlist">
+                </router-link>
+                <router-link to="/playlist">
                     <li class="menu__item">
                         <svg width="32" height="32">
                             <use xlink:href="#iconPlaylist" />
                         </svg>
                         <p>Playlists</p>
                     </li>
-                </RouterLink>
+                </router-link>
             </ul>
-        </RouterView>
+
     </nav>
 
     <symbol style="display: none">
