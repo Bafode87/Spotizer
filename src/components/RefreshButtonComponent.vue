@@ -1,5 +1,5 @@
 <template>
-    <a href="/Spotizer">
+    <a href="/Spotizer/">
         <svg width="32" height="32"  class="refreshIcon">
             <use xlink:href="#refreshIcon"/>
         </svg>

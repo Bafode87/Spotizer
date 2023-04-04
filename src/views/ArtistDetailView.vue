@@ -13,7 +13,7 @@
     </header>
     <main class="main__artist">
         <h3>Meilleurs titres</h3>
-        <CardListComponent :data="artist.songs"/>
+        <CardListComponent :data="artist.songs" :detailPath="pathOfSong"/>
         <h3>Albums</h3>
         <CardListComponent :data="artist.albums" orientation="vertical" :detailPath="pathOfAlbums"/>
         <BackButtonComponent />
@@ -36,5 +36,6 @@ await store.INITIALIZE_ARTIST_DETAIL(route.params);
 const artist = store.getArtistDetail(route.params);
 const pathOfAlbums = store.detailPath.album;
 
+const pathOfSong = store.detailPath.song;
 
 </script>

@@ -145,6 +145,7 @@ h3 {
   text-decoration: none;
   display: flex;
   justify-content: space-between;
+  color: white;
   padding: 0.5em;
 }
 
@@ -198,6 +199,28 @@ h3 {
 .main__album {
   padding: var(--spacing-1);
   margin-top: 2em;
+}
+
+
+// Song detail
+
+
+.container__songDetail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.song__info {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 2rem;
+  color: white;
+  width: 100%;
+
 }
 
 // Refresh icon
