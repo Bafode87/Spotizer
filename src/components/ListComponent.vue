@@ -2,6 +2,7 @@
     <section class="list">
         <div class="list__items" v-for="item in props.songs" :key="item.id">
             <div class="item">
+                <RouterLink :to="``">
                 <div>
                     <p>{{item.title}}</p>
                     <p class="item__subtitle">{{ props.artist }}</p>
@@ -9,6 +10,7 @@
                 <svg width="36" height="36" class="playlistAddIcon">
                     <use xlink:href="#playlistAddIcon" />
                 </svg>
+                </RouterLink>
             </div>
         </div>
     </section>
@@ -28,6 +30,9 @@
         artist : {
             type: String,
             required: true
+        },
+        detailPath: {
+            type: String
         }
     })
 

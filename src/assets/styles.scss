@@ -141,7 +141,8 @@ h3 {
   color: white;
 }
 
-.list .item {
+.list .item a {
+  text-decoration: none;
   display: flex;
   justify-content: space-between;
   padding: 0.5em;

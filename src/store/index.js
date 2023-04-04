@@ -21,6 +21,7 @@ const state = {
     artistsToDiscover: [],
     artistDetail: new Map(),
     albumDetail: new Map(),
+    songDetail: new Map(),
     detailPath: {
         album: DETAIL_PATH.ALBUM,
         artist: DETAIL_PATH.ARTIST
@@ -58,8 +59,8 @@ const actions = {
             const response =  await fetch(`${ROUTES.ARTIST}/${id}`)
             const artist = await response.json();
             artist.image = '/Spotizer/images/user.svg';
-            const albums = []
-            const songs = []
+            const albums = [];
+            const songs = [];
 
             for (const album of artist.albums) {
                 albums.push(await this.fetchAlbum(`${URI_BASE}${album}`))
@@ -95,6 +96,17 @@ const actions = {
         }
 
     },
+    async fetchSongDetail(id) {
+        try {
+            const response = await fetch(`${ROUTES.SONG}/${id}`);
+            const song = await response.json();
+            console.log(song);
+            return song;
+        } 
+        catch (err) {
+            console.log(err);
+        }
+    },
     async fetchAlbum(path) {
         try {
             const response = await fetch(path);
@@ -117,9 +129,7 @@ const actions = {
     },
     async fetchThumbnail({youtube}) {
         const id = youtube.split('/')[4]
-        const response = await fetch(`${URI_YOUTUBE_THUMBNAIL}${id}/0.jpg`)
-        console.log(response);
-        return response.url
+        return `${URI_YOUTUBE_THUMBNAIL}${id}/0.jpg`
 
     }
 }
@@ -140,6 +150,10 @@ const store = {
     getAlbumDetail({ id }) {
 
         return state.albumDetail.get(id)
+    },
+    getSongDetail({ id }) {
+
+        return state.songDetail.get(id)
     },
     async INITIALIZE_HOME() {
 
@@ -165,6 +179,11 @@ const store = {
             state.albumDetail.set(id, await actions.fetchAlbumDetail(id));
         }
 
+    },
+    async INITIALIZE_SONG_DETAIL({ id }) {
+        if(!state.songDetail.has(id)) {
+            state.songDetail.set(id, await actions.fetchSongDetail(id));
+        }
     }
 }
 

@@ -32,7 +32,6 @@
     import RefreshButtonComponent from '../components/RefreshButtonComponent.vue';
     import NavbarComponent from '../components/NavbarComponent.vue';
 
-
     const CardListComponent = defineAsyncComponent(() => import('./../components/CardListComponent.vue'))
 
     await store.INITIALIZE_HOME();
