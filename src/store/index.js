@@ -24,7 +24,8 @@ const state = {
     songDetail: new Map(),
     detailPath: {
         album: DETAIL_PATH.ALBUM,
-        artist: DETAIL_PATH.ARTIST
+        artist: DETAIL_PATH.ARTIST,
+        song: DETAIL_PATH.SONG
     }
 
 }
@@ -102,7 +103,7 @@ const actions = {
             const song = await response.json();
             console.log(song);
             return song;
-        } 
+        }
         catch (err) {
             console.log(err);
         }

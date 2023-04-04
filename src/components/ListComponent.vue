@@ -2,7 +2,7 @@
     <section class="list">
         <div class="list__items" v-for="item in props.songs" :key="item.id">
             <div class="item">
-                <RouterLink :to="``">
+                <router-link :to="`${pathOfSong}${item.id}`">
                 <div>
                     <p>{{item.title}}</p>
                     <p class="item__subtitle">{{ props.artist }}</p>
@@ -10,7 +10,7 @@
                 <svg width="36" height="36" class="playlistAddIcon">
                     <use xlink:href="#playlistAddIcon" />
                 </svg>
-                </RouterLink>
+                </router-link>
             </div>
         </div>
     </section>
@@ -22,6 +22,8 @@
 </template>
 
 <script setup>
+    import store from "@/store";
+
     const props = defineProps({
         songs : {
             type: Object,
@@ -35,5 +37,7 @@
             type: String
         }
     })
+
+    const pathOfSong = store.detailPath.song;
 
 </script>

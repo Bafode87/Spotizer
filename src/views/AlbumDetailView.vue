@@ -4,9 +4,9 @@
             <img :src="album.image" width="200" height="200" alt="Image de l'album">
         </div>
         <div class="info__albumDetail">
-            <RouterLink :to='`${pathOfArtist}${album.artist.id}`'>
+            <router-link :to='`${pathOfArtist}${album.artist.id}`'>
                 <img :src="album.artist.image" width="45" height="45" alt="Image de l'artiste">
-            </RouterLink>
+            </router-link>
 
             <div>
                 <p><strong>{{ album.title }}</strong> - {{ album.artist.name }}</p>
