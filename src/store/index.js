@@ -101,7 +101,11 @@ const actions = {
         try {
             const response = await fetch(`${ROUTES.SONG}/${id}`);
             const song = await response.json();
-            console.log(song);
+
+            song.artist = await this.fetchArtist(`${URI_BASE}${song.artist}`);
+            if (song.album) {
+                song.album = await this.fetchAlbum(`${URI_BASE}${song.album}`);
+            }
             return song;
         }
         catch (err) {
@@ -109,6 +113,15 @@ const actions = {
         }
     },
     async fetchAlbum(path) {
+        try {
+            const response = await fetch(path);
+            return await response.json()
+        }
+        catch (err) {
+            console.log(err);
+        }
+    },
+    async fetchArtist(path) {
         try {
             const response = await fetch(path);
             return await response.json()

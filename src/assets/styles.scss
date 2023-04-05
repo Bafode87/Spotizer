@@ -49,7 +49,7 @@ nav {
       color: orange;
     }
   }
-  
+
 .menu__item--active {
   display: flex;
   flex-direction: column;
@@ -209,18 +209,36 @@ h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   height: 100%;
+  gap: 10rem;
 }
 
 .song__info {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   margin-top: 2rem;
   color: white;
   width: 100%;
+}
 
+.song__title {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.song__artist {
+  font-size: 0.8em;
+}
+
+.song__album {
+  font-size: 0.8em;
+  color: white;
+  text-align: center;
+  margin: 1rem 0;
+  .song__album__title {
+    font-weight: bold;
+  }
 }
 
 // Refresh icon
