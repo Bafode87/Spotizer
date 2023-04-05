@@ -1,16 +1,23 @@
 <template>
     <section class="cardList">
-        <div :class="styleOrientation" >
+        <div :class="styleOrientation">
             <div class="cardList__items" v-for="item in props.data" :key="item.id">
-                <CardComponent :item="item" :detailPath="detailPath" />
+                <Suspense>
+                    <CardComponent :item="item" :detailPath="detailPath" />
+                    <template #fallback>
+                        <div class="loading">Chargement...</div>
+                    </template>
+                </Suspense>
             </div>
         </div>
     </section>
 </template>
 
 <script setup>
+import { defineAsyncComponent } from 'vue';
 
-import CardComponent from './CardComponent.vue';
+
+const CardComponent = defineAsyncComponent(() => import('./CardComponent.vue'))
 
 const props = defineProps({
     data: {

@@ -16,6 +16,11 @@ const DETAIL_PATH = {
     PLAYLIST: '/playlists/'
 }
 
+const SEARCH_PARAMETERS = {
+    ALBUM: 'title',
+    ARTIST: 'name',
+    SONG: 'title'
+}
 const state = {
     albumsMostRecent: [],
     artistsToDiscover: [],
@@ -30,6 +35,7 @@ const state = {
 
 }
 
+const ARTIST_IMAGE = '/Spotizer/images/user.svg';
 const actions = {
     async fetchAlbumsMostRecent() {
         try {
@@ -46,7 +52,7 @@ const actions = {
             const response = await fetch(`${ROUTES.ARTIST}?page=1`);
             const artists = await response.json();
             artists.forEach((artist) => {
-                artist.image = '/Spotizer/images/user.svg';
+                artist.image = ARTIST_IMAGE;
             })
 
             return artists;
@@ -59,7 +65,7 @@ const actions = {
         try {
             const response =  await fetch(`${ROUTES.ARTIST}/${id}`)
             const artist = await response.json();
-            artist.image = '/Spotizer/images/user.svg';
+            artist.image = ARTIST_IMAGE;
             const albums = [];
             const songs = [];
 
@@ -87,7 +93,7 @@ const actions = {
             const album = await response.json();
             const artist = await this.fetchArtistDetail(album.artist.id);
 
-            album.artist.image = '/Spotizer/images/user.svg';
+            album.artist.image = ARTIST_IMAGE;
             album.artist.name = artist.name;
 
             return album;
@@ -134,17 +140,52 @@ const actions = {
         try {
             const response = await fetch(path);
             const song = await response.json()
-            song.image = await this.fetchThumbnail(song)
+            song.image = this.fetchThumbnail(song)
             return song
         }
         catch (err) {
             console.log(err);
         }
     },
-    async fetchThumbnail({youtube}) {
+    fetchThumbnail({youtube}) {
         const id = youtube.split('/')[4]
         return `${URI_YOUTUBE_THUMBNAIL}${id}/0.jpg`
 
+    },
+    async fetchAutocompletion(event, filter) {
+        let currentPage = 1;
+        let allResults = [];
+       
+        while (true) {
+            const response = await fetch(`${ROUTES[filter]}?page=${currentPage}&${SEARCH_PARAMETERS[filter]}=${event.target.value.trim()}`);
+            const data = await response.json();
+
+            if (data.length === 0) {
+                break;
+            }
+
+            if (filter === 'ARTIST') {
+                console.log('oui');
+                for (const artist in data) {
+                    data[artist].image = ARTIST_IMAGE
+                    console.log(data[artist]);
+                }
+            }
+
+            if (filter === 'SONG') {
+                for (const song in data) {
+                    data[song].image = this.fetchThumbnail(data[song])
+                }
+            }
+
+            if(allResults.length > 8) {
+                break;
+            }
+
+            allResults = allResults.concat(data);
+            currentPage++;
+        }
+        return allResults.slice(0,8);
     }
 }
 
@@ -168,6 +209,9 @@ const store = {
     getSongDetail({ id }) {
 
         return state.songDetail.get(id)
+    },
+    getAutocompletion(event, filter) {
+        return actions.fetchAutocompletion(event, filter)
     },
     async INITIALIZE_HOME() {
 
