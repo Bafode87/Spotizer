@@ -7,9 +7,12 @@
                     <p>{{item.title}}</p>
                     <p class="item__subtitle">{{ props.artist }}</p>
                 </div>
-                <svg width="36" height="36" class="playlistAddIcon">
-                    <use xlink:href="#playlistAddIcon" />
-                </svg>
+
+                  <router-link :to='`${addSongToPlaylistPath}${item.id}`'>
+                    <svg width="36" height="36" class="playlistAddIcon">
+                        <use xlink:href="#playlistAddIcon" />
+                    </svg>
+                  </router-link>
                 </router-link>
             </div>
         </div>
@@ -39,5 +42,6 @@
     })
 
     const pathOfSong = store.detailPath.song;
+    const addSongToPlaylistPath = store.addSongToPlaylistPath;
 
 </script>

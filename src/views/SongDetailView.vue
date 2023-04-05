@@ -17,9 +17,11 @@
           <p class="song__title">{{ song.title }}</p>
           <p class="song__artist">{{ song.artist.name }}</p>
         </div>
-        <svg width="36" height="36" class="playlistAddIcon">
-          <use xlink:href="#playlistAddIcon"/>
-        </svg>
+        <router-link :to='`${addSongToPlaylistPath}${song.id}`'>
+            <svg width="36" height="36" class="playlistAddIcon">
+              <use xlink:href="#playlistAddIcon"/>
+            </svg>
+        </router-link>
       </div>
     </div>
   </div>
@@ -43,4 +45,5 @@ const route = useRoute()
 await store.INITIALIZE_SONG_DETAIL(route.params);
 const song = store.getSongDetail(route.params);
 
+const addSongToPlaylistPath = store.addSongToPlaylistPath;
 </script>

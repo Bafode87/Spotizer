@@ -21,6 +21,9 @@ const SEARCH_PARAMETERS = {
     ARTIST: 'name',
     SONG: 'title'
 }
+const CREATE_PLAYLIST_PATH = 'create-playlist'
+const ADD_SONG_TO_PLAYLIST_PATH = '/add-song-to-playlist/'
+
 const state = {
     albumsMostRecent: [],
     artistsToDiscover: [],
@@ -30,8 +33,11 @@ const state = {
     detailPath: {
         album: DETAIL_PATH.ALBUM,
         artist: DETAIL_PATH.ARTIST,
-        song: DETAIL_PATH.SONG
-    }
+        song: DETAIL_PATH.SONG,
+        playlist: DETAIL_PATH.PLAYLIST
+    },
+    createPlaylistPath: CREATE_PLAYLIST_PATH,
+    addSongToPlaylistPath: ADD_SONG_TO_PLAYLIST_PATH
 
 }
 
@@ -41,8 +47,7 @@ const actions = {
         try {
             const response = await fetch(`${ROUTES.ALBUM}?page=1`);
             return await response.json();
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
         }
 
@@ -56,14 +61,13 @@ const actions = {
             })
 
             return artists;
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
         }
     },
     async fetchArtistDetail(id) {
         try {
-            const response =  await fetch(`${ROUTES.ARTIST}/${id}`)
+            const response = await fetch(`${ROUTES.ARTIST}/${id}`)
             const artist = await response.json();
             artist.image = ARTIST_IMAGE;
             const albums = [];
@@ -73,7 +77,7 @@ const actions = {
                 albums.push(await this.fetchAlbum(`${URI_BASE}${album}`))
             }
 
-            for(let song of artist.songs.slice(0, 3)) {
+            for (let song of artist.songs.slice(0, 3)) {
                 songs.push(await this.fetchSong(`${URI_BASE}${song}`))
             }
 
@@ -82,8 +86,7 @@ const actions = {
 
             return artist;
 
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err)
         }
     },
@@ -97,8 +100,7 @@ const actions = {
             album.artist.name = artist.name;
 
             return album;
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
         }
 
@@ -113,8 +115,7 @@ const actions = {
                 song.album = await this.fetchAlbum(`${URI_BASE}${song.album}`);
             }
             return song;
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
         }
     },
@@ -122,8 +123,7 @@ const actions = {
         try {
             const response = await fetch(path);
             return await response.json()
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
         }
     },
@@ -131,8 +131,7 @@ const actions = {
         try {
             const response = await fetch(path);
             return await response.json()
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
         }
     },
@@ -142,8 +141,7 @@ const actions = {
             const song = await response.json()
             song.image = this.fetchThumbnail(song)
             return song
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
         }
     },
@@ -155,7 +153,7 @@ const actions = {
     async fetchAutocompletion(event, filter) {
         let currentPage = 1;
         let allResults = [];
-       
+
         while (true) {
             const response = await fetch(`${ROUTES[filter]}?page=${currentPage}&${SEARCH_PARAMETERS[filter]}=${event.target.value.trim()}`);
             const data = await response.json();
@@ -186,27 +184,55 @@ const actions = {
             currentPage++;
         }
         return allResults.slice(0,8);
+    },
+    async createPlaylist(name) {
+        try {
+            const response = await fetch(`${ROUTES.PLAYLIST}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name})
+            })
+            return await response.json()
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async fetchPlaylistDetail(id) {
+        try {
+            const response = await fetch(`${ROUTES.PLAYLIST}/${id}`)
+            return await response.json()
+        } catch (err) {
+            console.log(err)
+        }
     }
 }
 
 const store = {
-    get albumsMostRecent () {
+    get albumsMostRecent() {
         return state.albumsMostRecent
     },
-    get artistToDiscover () {
+    get artistToDiscover() {
         return state.artistsToDiscover
     },
-    get detailPath () {
+    get detailPath() {
         return state.detailPath;
     },
-    getArtistDetail({ id }) {
+    get addSongToPlaylistPath() {
+        return state.addSongToPlaylistPath;
+    },
+    get createPlaylistPath() {
+        return state.createPlaylistPath;
+    },
+    getArtistDetail({id}) {
         return state.artistDetail.get(id);
     },
-    getAlbumDetail({ id }) {
+    getAlbumDetail({id}) {
 
         return state.albumDetail.get(id)
     },
-    getSongDetail({ id }) {
+    getSongDetail({id}) {
 
         return state.songDetail.get(id)
     },
@@ -226,21 +252,44 @@ const store = {
             ])
         }
     },
-    async INITIALIZE_ARTIST_DETAIL({ id }) {
+    async INITIALIZE_ARTIST_DETAIL({id}) {
         if (!state.artistDetail.has(id)) {
             state.artistDetail.set(id, await actions.fetchArtistDetail(id));
         }
 
     },
-    async INITIALIZE_ALBUM_DETAIL({ id }) {
+    async INITIALIZE_ALBUM_DETAIL({id}) {
         if (!state.albumDetail.has(id)) {
             state.albumDetail.set(id, await actions.fetchAlbumDetail(id));
         }
 
     },
-    async INITIALIZE_SONG_DETAIL({ id }) {
-        if(!state.songDetail.has(id)) {
+    async INITIALIZE_SONG_DETAIL({id}) {
+        if (!state.songDetail.has(id)) {
             state.songDetail.set(id, await actions.fetchSongDetail(id));
+        }
+    },
+    async createPlaylist(value) {
+        try {
+            const playlist = await actions.createPlaylist(value);
+            const playlistsIdsFromLocalStorage = JSON.parse(localStorage.getItem('playlists')) || [];
+            playlistsIdsFromLocalStorage.push(playlist.id);
+            localStorage.setItem('playlists', JSON.stringify(playlistsIdsFromLocalStorage));
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    getPlaylists() {
+        const playlistsIdsFromLocalStorage = JSON.parse(localStorage.getItem('playlists'));
+
+        if (!playlistsIdsFromLocalStorage) {
+            return [];
+        } else {
+            const playlists = playlistsIdsFromLocalStorage.map(async (id) => {
+                return await actions.fetchPlaylistDetail(id);
+            });
+
+            return Promise.all(playlists);
         }
     }
 }
