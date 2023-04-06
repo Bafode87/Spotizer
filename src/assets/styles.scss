@@ -15,6 +15,10 @@ body {
   background-color: var(--color-background);
 }
 
+a, button {
+  cursor: pointer;
+}
+
 // Navbar component
 
 nav {
@@ -176,6 +180,15 @@ h3 {
   border-radius: 5px;
 }
 
+.nodata {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: white;
+  margin-top: 2em;
+}
+
 // List component
 
 .list {
@@ -335,7 +348,7 @@ button, .button__filters {
   }
 }
 
-// Modal view 
+// Modal view
 .modal {
   position: fixed;
   z-index: 999;
@@ -357,7 +370,7 @@ button, .button__filters {
   gap: 2em;
 
   h3 {
-      color: white;   
+      color: white;
   }
 
   input {
@@ -373,5 +386,11 @@ button, .button__filters {
 
 
 .blur-content{
-  filter: blur(5px); 
+  filter: blur(5px);
+}
+
+// Add song to playlist view
+.addSongToPlaylist__title {
+  text-align: center;
+  padding-top: 1rem;
 }

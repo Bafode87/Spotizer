@@ -24,7 +24,7 @@ const SEARCH_PARAMETERS = {
 const ARTIST_IMAGE = '/Spotizer/images/user.svg';
 const PLAYLIST_IMAGE = '/Spotizer/images/playlist.svg';
 
-// const ADD_SONG_TO_PLAYLIST_PATH = '/add-song-to-playlist/'
+const ADD_SONG_TO_PLAYLIST_PATH = '/add-song-to-playlist/'
 
 const state = {
     albumsMostRecent: [],
@@ -39,9 +39,7 @@ const state = {
         song: DETAIL_PATH.SONG,
         playlist: DETAIL_PATH.PLAYLIST
     },
-    // createPlaylistPath: CREATE_PLAYLIST_PATH,
-    // addSongToPlaylistPath: ADD_SONG_TO_PLAYLIST_PATH
-
+    addSongToPlaylistPath: ADD_SONG_TO_PLAYLIST_PATH
 }
 
 
@@ -150,7 +148,7 @@ const actions = {
 
             return Promise.all(playlists);
         }
-        
+
     },
     async fetchSong(path) {
         try {
@@ -193,14 +191,14 @@ const actions = {
                 }
             }
 
-            if(allResults.length > 8) {
+            if (allResults.length > 8) {
                 break;
             }
 
             allResults = allResults.concat(data);
             currentPage++;
         }
-        return allResults.slice(0,8);
+        return allResults.slice(0, 8);
     },
     async fetchPlaylistDetail(id) {
         try {
@@ -225,6 +223,25 @@ const actions = {
         } catch (err) {
             console.log(err)
         }
+    },
+    async updatePlaylist(playlistId, songId) {
+        try {
+            const playlist = await this.fetchPlaylistDetail(playlistId);
+            const songIds = playlist.songs.map(song => song.id);
+            songIds.push(songId);
+
+            return await fetch(`${ROUTES.PLAYLIST}/${playlistId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    songs: songIds.map(id => `/~morap01/L250/public/index.php/api/songs/${id}`)
+                })
+            });
+        } catch (err) {
+            console.error(err);
+        }
     }
 }
 
@@ -241,9 +258,9 @@ const store = {
     get playlists() {
         return state.playlists;
     },
-    // get addSongToPlaylistPath() {
-    //     return state.addSongToPlaylistPath;
-    // },
+    get addSongToPlaylistPath() {
+        return state.addSongToPlaylistPath;
+    },
     getArtistDetail({id}) {
         return state.artistDetail.get(id);
     },
@@ -297,9 +314,14 @@ const store = {
             const playlistsIdsFromLocalStorage = JSON.parse(localStorage.getItem('playlists')) || [];
             playlistsIdsFromLocalStorage.push(playlist.id);
             localStorage.setItem('playlists', JSON.stringify(playlistsIdsFromLocalStorage));
+            return playlist;
         } catch (error) {
             console.error(error);
         }
+    },
+    updatePlaylist(playlistId, songId) {
+        return actions.updatePlaylist(playlistId, songId);
+
     }
 }
 

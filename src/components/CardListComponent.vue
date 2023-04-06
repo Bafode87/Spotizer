@@ -1,15 +1,19 @@
 <template>
     <section class="cardList">
-        <div :class="styleOrientation">
+        <div :class="styleOrientation" v-if="props.data.length > 0">
             <div class="cardList__items" v-for="item in props.data" :key="item.id">
                 <Suspense>
-                    <CardComponent :item="item" :detailPath="detailPath" />
+                    <CardComponent v-if="!props.emit" :item="item" :detailPath="detailPath"/>
+                    <CardComponent v-else :item="item" :detailPath="detailPath" @select="$emit('select', item.id)" emit />
                     <template #fallback>
                         <div class="loading">Chargement...</div>
                     </template>
                 </Suspense>
             </div>
         </div>
+      <div v-else class="nodata">
+        <p>Aucune donnée à afficher...</p>
+      </div>
     </section>
 </template>
 
@@ -32,9 +36,13 @@ const props = defineProps({
     },
     orientation: {
         type: String
+    },
+    emit: {
+      type: Boolean,
+      default: false,
+      required: false
     }
 });
-
 
 let styleOrientation = 'cardList__container';
 

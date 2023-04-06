@@ -21,15 +21,7 @@
     </symbol>
     <Teleport to="body">
         <div v-if="open" class="modal">
-            <div class="createPlaylist__container">
-
-                <h3>Donnez un nom à votre playlist</h3>
-                <input type="text" placeholder="Nom de la playlist" v-model="playlistName">
-                <div class="createPlaylist__button">
-                    <button @click="open = false">Close</button>
-                    <button @click="createPlaylist">Créer</button>
-                </div>
-            </div>
+            <CreatePlaylistModalComponent @close="open = false" @confirm="createPlaylist" />
         </div>
     </Teleport>
 
@@ -42,6 +34,7 @@ import store from "@/store";
 import NavbarComponent from "@/components/NavbarComponent.vue";
 import CardListComponent from "@/components/CardListComponent.vue"
 import { ref } from "vue";
+import CreatePlaylistModalComponent from "@/components/CreatePlaylistModalComponent.vue";
 
 let open = ref(false)
 await store.INITIALIZE_PLAYLISTS();
@@ -52,14 +45,11 @@ playlists.value = store.playlists;
 
 const pathOfPlaylist = store.detailPath.playlist;
 
-const playlistName = ref('');
-
-const createPlaylist = async () => {
-    await store.createPlaylist(playlistName.value);
-    playlistName.value = '';
-    open.value = false;
-    await store.INITIALIZE_PLAYLISTS();
-    playlists.value = store.playlists;
+const createPlaylist = async (playlistName) => {
+      await store.createPlaylist(playlistName);
+      open.value = false;
+      await store.INITIALIZE_PLAYLISTS();
+      playlists.value = store.playlists;
 };
 
 window.addEventListener('click', (e) => {
@@ -68,7 +58,7 @@ window.addEventListener('click', (e) => {
             open.value = false;
         }
     }
-    
+
 })
 </script>
 
