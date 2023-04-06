@@ -15,7 +15,7 @@ body {
   background-color: var(--color-background);
 }
 
-// Main component
+// Navbar component
 
 nav {
   position:fixed;
@@ -39,21 +39,17 @@ nav {
   padding: var(--spacing-1);
 }
 
+
+a.router-link-active.router-link-exact-active li{
+  color: orange;
+}
+
 .menu__item {
-    color: var(--color-text);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    &--active {
-      color: orange;
-    }
-  }
-
-.menu__item--active {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-decoration: none;
+  color: white;
 }
 
 // Home view
@@ -87,7 +83,9 @@ h3 {
 }
 
 // Search view
-
+.main__search {
+  margin-bottom: 70px;
+}
 .search__header {
   color: white;
   padding: var(--spacing-1);
@@ -98,6 +96,35 @@ h3 {
   padding: 1em;
   margin-top: 2em;
   margin-bottom: 1em;
+}
+
+
+// Playlist View
+.main__playlist {
+  margin-bottom: 70px;
+}
+
+.header__playlist {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  padding: 0.5em;
+
+
+  & button {
+      display: flex;
+      margin-top: 2em;
+      margin-bottom: 1em;
+      align-self: center;
+      align-items: center;
+      border: 1px solid orange;
+      gap: 0.5em;
+      padding: 0.5em;
+      background-color: var(--color-background);
+      text-decoration: none;
+      color: orange;
+      border-radius: 5px;
+  }
 }
 
 // cardList component
@@ -262,12 +289,12 @@ h3 {
   display: flex;
   justify-content: space-evenly;
 }
-.button__filters {
+button, .button__filters {
   background-color: var(--color-background);
   padding: 0.5em;
-  color:  white;
-  border: 1px solid white;
-  border-radius: 15px;
+  color:  orange;
+  border: 1px solid orange;
+  border-radius: 5px;
 }
 
 .button__filters input {
@@ -276,7 +303,7 @@ h3 {
 
 .button__filters input:checked {
   display: inline;
-  accent-color: aliceblue;
+  accent-color: orange;
 }
 // Refresh icon
 .refreshIcon {
@@ -306,4 +333,45 @@ h3 {
   &.show {
     opacity: 1;
   }
+}
+
+// Modal view 
+.modal {
+  position: fixed;
+  z-index: 999;
+  top: 15%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  margin-left: -150px;
+  background-color: var(--color-background);
+  border: 1px solid whitesmoke;
+  border-radius: 15px;
+}
+
+.createPlaylist__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
+
+  h3 {
+      color: white;   
+  }
+
+  input {
+    padding: 1em;
+  }
+
+}
+
+.createPlaylist__button {
+  display: flex;
+  gap: 1em;
+}
+
+
+.blur-content{
+  filter: blur(5px); 
 }

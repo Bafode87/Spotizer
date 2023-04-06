@@ -6,7 +6,6 @@ const ROUTES = {
 }
 
 const URI_BASE = 'https://mmi.unilim.fr/';
-
 const URI_YOUTUBE_THUMBNAIL = 'https://img.youtube.com/vi/'
 
 const DETAIL_PATH = {
@@ -21,12 +20,16 @@ const SEARCH_PARAMETERS = {
     ARTIST: 'name',
     SONG: 'title'
 }
-const CREATE_PLAYLIST_PATH = 'create-playlist'
-const ADD_SONG_TO_PLAYLIST_PATH = '/add-song-to-playlist/'
+
+const ARTIST_IMAGE = '/Spotizer/images/user.svg';
+const PLAYLIST_IMAGE = '/Spotizer/images/playlist.svg';
+
+// const ADD_SONG_TO_PLAYLIST_PATH = '/add-song-to-playlist/'
 
 const state = {
     albumsMostRecent: [],
     artistsToDiscover: [],
+    playlists: [],
     artistDetail: new Map(),
     albumDetail: new Map(),
     songDetail: new Map(),
@@ -36,12 +39,12 @@ const state = {
         song: DETAIL_PATH.SONG,
         playlist: DETAIL_PATH.PLAYLIST
     },
-    createPlaylistPath: CREATE_PLAYLIST_PATH,
-    addSongToPlaylistPath: ADD_SONG_TO_PLAYLIST_PATH
+    // createPlaylistPath: CREATE_PLAYLIST_PATH,
+    // addSongToPlaylistPath: ADD_SONG_TO_PLAYLIST_PATH
 
 }
 
-const ARTIST_IMAGE = '/Spotizer/images/user.svg';
+
 const actions = {
     async fetchAlbumsMostRecent() {
         try {
@@ -135,6 +138,20 @@ const actions = {
             console.log(err);
         }
     },
+    async fetchPlaylist() {
+        const localStoragePlaylist = JSON.parse(localStorage.getItem('playlists'));
+
+        if (!localStoragePlaylist) {
+            return [];
+        } else {
+            const playlists = localStoragePlaylist.map(async (id) => {
+                return await actions.fetchPlaylistDetail(id);
+            });
+
+            return Promise.all(playlists);
+        }
+        
+    },
     async fetchSong(path) {
         try {
             const response = await fetch(path);
@@ -185,7 +202,17 @@ const actions = {
         }
         return allResults.slice(0,8);
     },
-    async createPlaylist(name) {
+    async fetchPlaylistDetail(id) {
+        try {
+            const response = await fetch(`${ROUTES.PLAYLIST}/${id}`)
+            const playlist = await response.json();
+            playlist.image = PLAYLIST_IMAGE;
+            return playlist;
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async fetchCreatePlaylist(name) {
         try {
             const response = await fetch(`${ROUTES.PLAYLIST}`, {
                 method: 'POST',
@@ -194,14 +221,6 @@ const actions = {
                 },
                 body: JSON.stringify({name})
             })
-            return await response.json()
-        } catch (err) {
-            console.log(err)
-        }
-    },
-    async fetchPlaylistDetail(id) {
-        try {
-            const response = await fetch(`${ROUTES.PLAYLIST}/${id}`)
             return await response.json()
         } catch (err) {
             console.log(err)
@@ -219,12 +238,12 @@ const store = {
     get detailPath() {
         return state.detailPath;
     },
-    get addSongToPlaylistPath() {
-        return state.addSongToPlaylistPath;
+    get playlists() {
+        return state.playlists;
     },
-    get createPlaylistPath() {
-        return state.createPlaylistPath;
-    },
+    // get addSongToPlaylistPath() {
+    //     return state.addSongToPlaylistPath;
+    // },
     getArtistDetail({id}) {
         return state.artistDetail.get(id);
     },
@@ -252,6 +271,9 @@ const store = {
             ])
         }
     },
+    async INITIALIZE_PLAYLISTS() {
+        state.playlists = await actions.fetchPlaylist();
+    },
     async INITIALIZE_ARTIST_DETAIL({id}) {
         if (!state.artistDetail.has(id)) {
             state.artistDetail.set(id, await actions.fetchArtistDetail(id));
@@ -271,25 +293,12 @@ const store = {
     },
     async createPlaylist(value) {
         try {
-            const playlist = await actions.createPlaylist(value);
+            const playlist = await actions.fetchCreatePlaylist(value);
             const playlistsIdsFromLocalStorage = JSON.parse(localStorage.getItem('playlists')) || [];
             playlistsIdsFromLocalStorage.push(playlist.id);
             localStorage.setItem('playlists', JSON.stringify(playlistsIdsFromLocalStorage));
         } catch (error) {
             console.error(error);
-        }
-    },
-    getPlaylists() {
-        const playlistsIdsFromLocalStorage = JSON.parse(localStorage.getItem('playlists'));
-
-        if (!playlistsIdsFromLocalStorage) {
-            return [];
-        } else {
-            const playlists = playlistsIdsFromLocalStorage.map(async (id) => {
-                return await actions.fetchPlaylistDetail(id);
-            });
-
-            return Promise.all(playlists);
         }
     }
 }

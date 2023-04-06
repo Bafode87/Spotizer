@@ -3,7 +3,7 @@
     <nav>
             <ul class="menu">
                 <router-link to="/">
-                    <li class="menu__item--active">
+                    <li class="menu__item">
                         <svg width="32" height="32">
                             <use xlink:href="#iconHome" />
                         </svg>

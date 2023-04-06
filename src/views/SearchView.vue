@@ -15,7 +15,7 @@
         </div>
     </header>
 
-    <main>
+    <main class="main__search">
         <Suspense>
             <CardListComponent :data="data" orientation="vertical" :detailPath="path"/>
             <template #fallback>
