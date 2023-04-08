@@ -39,7 +39,8 @@ const state = {
         song: DETAIL_PATH.SONG,
         playlist: DETAIL_PATH.PLAYLIST
     },
-    addSongToPlaylistPath: ADD_SONG_TO_PLAYLIST_PATH
+    addSongToPlaylistPath: ADD_SONG_TO_PLAYLIST_PATH,
+    playlistDetail: new Map(),
 }
 
 
@@ -142,13 +143,13 @@ const actions = {
         if (!localStoragePlaylist) {
             return [];
         } else {
-            const playlists = localStoragePlaylist.map(async (id) => {
+            const reversedPlaylist = localStoragePlaylist.reverse(); // Reverse the order
+            const playlists = reversedPlaylist.map(async (id) => {
                 return await actions.fetchPlaylistDetail(id);
             });
 
             return Promise.all(playlists);
         }
-
     },
     async fetchSong(path) {
         try {
@@ -205,6 +206,9 @@ const actions = {
             const response = await fetch(`${ROUTES.PLAYLIST}/${id}`)
             const playlist = await response.json();
             playlist.image = PLAYLIST_IMAGE;
+            playlist.songs = await Promise.all(playlist.songs.map(async (song) => {
+                return await this.fetchSongDetail(song.id)
+            }))
             return playlist;
         } catch (err) {
             console.log(err)
@@ -242,6 +246,27 @@ const actions = {
         } catch (err) {
             console.error(err);
         }
+    },
+    async removeSongFromPlaylist(playlistId, songId) {
+        try {
+            const playlist = await this.fetchPlaylistDetail(playlistId);
+            const songIds = playlist.songs.map(song => song.id);
+            const index = songIds.indexOf(songId);
+            songIds.splice(index, 1);
+
+            return await fetch(`${ROUTES.PLAYLIST}/${playlistId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    songs: songIds.map(id => `/~morap01/L250/public/index.php/api/songs/${id}`)
+                })
+            });
+        } catch (err) {
+            console.error(err);
+        }
+
     }
 }
 
@@ -322,6 +347,15 @@ const store = {
     updatePlaylist(playlistId, songId) {
         return actions.updatePlaylist(playlistId, songId);
 
+    },
+    async INITIALIZE_PLAYLIST_DETAIL({id}) {
+        state.playlistDetail.set(id, await actions.fetchPlaylistDetail(id));
+    },
+    getPlaylistDetail({id}) {
+        return state.playlistDetail.get(id);
+    },
+    removeSongFromPlaylist(id, songId) {
+        return actions.removeSongFromPlaylist(id, songId);
     }
 }
 

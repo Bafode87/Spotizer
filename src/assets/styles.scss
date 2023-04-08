@@ -22,7 +22,7 @@ a, button {
 // Navbar component
 
 nav {
-  position:fixed;
+  position: fixed;
   bottom: 0;
   width: 100%;
   height: 70px;
@@ -44,7 +44,7 @@ nav {
 }
 
 
-a.router-link-active.router-link-exact-active li{
+a.router-link-active.router-link-exact-active li {
   color: orange;
 }
 
@@ -90,6 +90,7 @@ h3 {
 .main__search {
   margin-bottom: 70px;
 }
+
 .search__header {
   color: white;
   padding: var(--spacing-1);
@@ -116,18 +117,18 @@ h3 {
 
 
   & button {
-      display: flex;
-      margin-top: 2em;
-      margin-bottom: 1em;
-      align-self: center;
-      align-items: center;
-      border: 1px solid orange;
-      gap: 0.5em;
-      padding: 0.5em;
-      background-color: var(--color-background);
-      text-decoration: none;
-      color: orange;
-      border-radius: 5px;
+    display: flex;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    align-self: center;
+    align-items: center;
+    border: 1px solid orange;
+    gap: 0.5em;
+    padding: 0.5em;
+    background-color: var(--color-background);
+    text-decoration: none;
+    color: orange;
+    border-radius: 5px;
   }
 }
 
@@ -146,7 +147,7 @@ h3 {
   color: white;
 }
 
-.cardList__container{
+.cardList__container {
   display: flex;
   gap: var(--spacing-2);
   overflow-x: scroll;
@@ -160,13 +161,13 @@ h3 {
 }
 
 .cardList .item a {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    color: var(--color-text);
-    gap: 1em;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  color: var(--color-text);
+  gap: 1em;
 }
 
 .cardList__container::-webkit-scrollbar {
@@ -195,17 +196,29 @@ h3 {
   color: white;
 }
 
-.list .item a {
+.list .item {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+}
+
+.list .item > a {
   text-decoration: none;
   display: flex;
   justify-content: space-between;
   color: white;
   padding: 0.4em;
   align-items: center;
+  width: 100%;
 }
 
 .list .item__subtitle {
   font-size: 0.8em;
+}
+
+.item__remove {
+  border: none;
 }
 
 
@@ -277,6 +290,11 @@ h3 {
   width: 100%;
 }
 
+.song__titleAndArtist > a {
+  text-decoration: none;
+  color: white;
+}
+
 .song__title {
   font-size: 1em;
   font-weight: bold;
@@ -291,6 +309,7 @@ h3 {
   color: white;
   text-align: center;
   margin: 1rem 0;
+
   .song__album__title {
     font-weight: bold;
   }
@@ -302,10 +321,11 @@ h3 {
   display: flex;
   justify-content: space-evenly;
 }
+
 button, .button__filters {
   background-color: var(--color-background);
   padding: 0.5em;
-  color:  orange;
+  color: orange;
   border: 1px solid orange;
   border-radius: 5px;
 }
@@ -318,6 +338,7 @@ button, .button__filters {
   display: inline;
   accent-color: orange;
 }
+
 // Refresh icon
 .refreshIcon {
   position: absolute;
@@ -337,7 +358,7 @@ button, .button__filters {
 // Upward icon
 .upwardIcon {
   z-index: 10;
-  position:sticky;
+  position: sticky;
   bottom: 40px;
   float: right;
   color: orange;
@@ -370,7 +391,7 @@ button, .button__filters {
   gap: 2em;
 
   h3 {
-      color: white;
+    color: white;
   }
 
   input {
@@ -385,7 +406,7 @@ button, .button__filters {
 }
 
 
-.blur-content{
+.blur-content {
   filter: blur(5px);
 }
 
@@ -393,4 +414,30 @@ button, .button__filters {
 .addSongToPlaylist__title {
   text-align: center;
   padding-top: 1rem;
+}
+
+// Playlist detail view
+.playlistDetail__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  width: 100%;
+}
+.playlist__details {
+  width: 90%;
+}
+
+.playlist__title {
+  font-size: 1.8rem;
+}
+
+.playlist__info {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+.playlist__songs {
+  margin-top: 1rem;
+  width: 100%;
+
 }

@@ -59,7 +59,7 @@ const createPlaylist = async (playlistName) => {
   open.value = false;
   await store.INITIALIZE_PLAYLISTS();
   playlists.value = store.playlists;
-  window.location.href = `/Spotizer${pathOfPlaylist}${playlistCreated.id}`
+  alert('La chanson a bien été ajoutée à la playlist créée')
 };
 
 const selectPlaylist = async (playlistId) => {
@@ -67,7 +67,7 @@ const selectPlaylist = async (playlistId) => {
   open.value = false;
   await store.INITIALIZE_PLAYLISTS();
   playlists.value = store.playlists;
-  window.location.href = `/Spotizer${pathOfPlaylist}${playlistId}`
+  alert('La chanson a bien été ajoutée à la playlist')
 };
 
 
