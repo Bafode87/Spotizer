@@ -21,6 +21,12 @@
             </template>
         </Suspense>
         <h3>Playlists</h3>
+        <Suspense>
+            <CardListComponent :nodata="`Aucune playlist.`" :data="playlist" :detailPath="pathOfPlaylists" />
+            <template #fallback>
+                <div class="loading">Chargement...</div>
+            </template>
+        </Suspense>
         <RefreshButtonComponent />
     </main>
     <NavbarComponent />
@@ -39,8 +45,10 @@
 
     const albums = store.albumsMostRecent;
     const artists = store.artistToDiscover;
+    const playlist = store.playlists;
 
     const pathOfAlbums = store.detailPath.album;
     const pathOfArtists = store.detailPath.artist;
+    const pathOfPlaylists = store.detailPath.playlist;
 
 </script>

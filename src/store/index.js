@@ -150,7 +150,7 @@ const actions = {
         if (!localStoragePlaylist) {
             return [];
         } else {
-            const reversedPlaylist = localStoragePlaylist.reverse(); // Reverse the order
+            const reversedPlaylist = localStoragePlaylist.reverse();
             const playlists = reversedPlaylist.map(async (id) => {
                 return await actions.fetchPlaylistDetail(id);
             });
@@ -274,7 +274,7 @@ const store = {
         return state.detailPath;
     },
     get playlists() {
-        return state.playlists.reverse();
+        return state.playlists;
     },
     get editPath() {
         return state.editPath;
