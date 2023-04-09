@@ -17,7 +17,7 @@
 
     <main class="main__search">
         <Suspense>
-            <CardListComponent :data="data" orientation="vertical" :detailPath="path"/>
+            <CardListComponent :nodata="`Aucun résultat.`" :data="data" orientation="vertical" :detailPath="path"/>
             <template #fallback>
                     <div class="loading">Chargement...</div>
             </template>

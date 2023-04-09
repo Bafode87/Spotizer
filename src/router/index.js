@@ -42,6 +42,10 @@ const router = createRouter({
             path: '/add-song-to-playlist/:id',
             name: 'addSongToPlaylist',
             component: () => import('@/views/AddSongToPlaylistView.vue')
+        },
+        {
+            path: '/:catchAll(.*)',
+            redirect: '/'
         }
     ]
 })

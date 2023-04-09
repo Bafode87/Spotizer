@@ -1,3 +1,5 @@
+// For mobile
+
 @import './base.css';
 
 body {
@@ -9,7 +11,7 @@ body {
 }
 
 #app {
-  max-width: 415px;
+  max-width: 768px;
   width: 100%;
   position: relative;
   background-color: var(--color-background);
@@ -29,7 +31,7 @@ nav {
   background-color: var(--color-background);
   opacity: 0.99;
   border-top: 0.5px solid white;
-  max-width: 415px;
+  max-width: 768px;
 }
 
 .menu > a {
@@ -132,6 +134,13 @@ h3 {
   }
 }
 
+// Add song to playlist view
+
+.addSongToPlaylist__title {
+  text-align: center;
+  margin-top: 70px;
+}
+
 // cardList component
 
 .cardList {
@@ -196,21 +205,16 @@ h3 {
   color: white;
 }
 
-.list .item {
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  width: 100%;
-}
-
-.list .item > a {
-  text-decoration: none;
+.list .item  {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.list .item a {
+  text-decoration: none;
   color: white;
   padding: 0.4em;
-  align-items: center;
-  width: 100%;
 }
 
 .list .item__subtitle {
@@ -229,13 +233,13 @@ h3 {
   color: var(--color-text);
 }
 
-.artist__header {
+.header__artist {
   margin-top: 70px;
   display: flex;
   justify-content: space-evenly;
 }
 
-.artist__info {
+.info__artist {
   display: flex;
   flex-direction: column;
   color: white;
@@ -273,47 +277,56 @@ h3 {
 // Song detail
 
 
-.container__songDetail {
+.main__songDetail {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
-  gap: 10rem;
+  height: calc(100% - 70px);
+  justify-content: center;
 }
 
-.song__info {
+.info__songDetail {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 2rem;
-  color: white;
-  width: 100%;
-}
-
-.song__titleAndArtist > a {
-  text-decoration: none;
+  margin-top: 2em;
   color: white;
 }
 
-.song__title {
+.title__songDetail {
   font-size: 1em;
   font-weight: bold;
 }
 
-.song__artist {
-  font-size: 0.8em;
-}
 
-.song__album {
+.header__songDetail {
   font-size: 0.8em;
   color: white;
   text-align: center;
-  margin: 1rem 0;
-
-  .song__album__title {
+  margin: 1em 0;
+  .title__songDetail {
     font-weight: bold;
   }
 }
+
+// Playlist detail view
+.header__playlistDetail {
+  margin-top: 70px;
+  color: white;
+  padding: var(--spacing-1);
+}
+
+.image__playlistDetail {
+  display: flex;
+  justify-content: center;
+}
+
+
+.main__playlistDetail {
+  padding: var(--spacing-1);
+  margin-top: 2em;
+}
+
 
 // Boutons filtres
 
@@ -381,18 +394,25 @@ button, .button__filters {
   background-color: var(--color-background);
   border: 1px solid whitesmoke;
   border-radius: 15px;
+  color: white;
+
+  &--information {
+    height: 150px;
+    top: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+  }
 }
 
-.createPlaylist__container {
+
+.modal__container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2em;
-
-  h3 {
-    color: white;
-  }
 
   input {
     padding: 1em;
@@ -400,44 +420,20 @@ button, .button__filters {
 
 }
 
-.createPlaylist__button {
+.modal__button {
   display: flex;
   gap: 1em;
 }
 
 
-.blur-content {
-  filter: blur(5px);
+.blur-content{
+  filter: blur(5px); 
 }
 
-// Add song to playlist view
-.addSongToPlaylist__title {
-  text-align: center;
-  padding-top: 1rem;
-}
+// no data 
 
-// Playlist detail view
-.playlistDetail__container {
+.nodata {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-  width: 100%;
-}
-.playlist__details {
-  width: 90%;
-}
-
-.playlist__title {
-  font-size: 1.8rem;
-}
-
-.playlist__info {
-  text-transform: uppercase;
-  font-size: 0.8rem;
-}
-.playlist__songs {
-  margin-top: 1rem;
-  width: 100%;
-
+  justify-content: center;
+  margin-top: 3em;
 }

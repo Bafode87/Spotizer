@@ -1,10 +1,10 @@
 <template>
     <header>
-        <div class="artist__header">
-            <div class="artist__image">
+        <div class="header__artist">
+            <div class="image__artist">
                 <img :src="artist.image" alt="Image de l'artiste" width="100" height="100">
             </div>
-            <div class="artist__info">
+            <div class="info__artist">
                 <p><strong>{{ artist.name }}</strong></p>
                 <p>{{ artist.albums.length }} albums</p>
                 <p>{{ artist.songs.length }} chansons</p>

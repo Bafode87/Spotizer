@@ -15,6 +15,10 @@ const DETAIL_PATH = {
     PLAYLIST: '/playlists/'
 }
 
+const EDIT_PATH = {
+    ADD_SONG_TO_PLAYLIST: '/add-song-to-playlist/'
+}
+
 const SEARCH_PARAMETERS = {
     ALBUM: 'title',
     ARTIST: 'name',
@@ -24,8 +28,6 @@ const SEARCH_PARAMETERS = {
 const ARTIST_IMAGE = '/Spotizer/images/user.svg';
 const PLAYLIST_IMAGE = '/Spotizer/images/playlist.svg';
 
-const ADD_SONG_TO_PLAYLIST_PATH = '/add-song-to-playlist/'
-
 const state = {
     albumsMostRecent: [],
     artistsToDiscover: [],
@@ -33,14 +35,19 @@ const state = {
     artistDetail: new Map(),
     albumDetail: new Map(),
     songDetail: new Map(),
+    playlistDetail: new Map(),
     detailPath: {
         album: DETAIL_PATH.ALBUM,
         artist: DETAIL_PATH.ARTIST,
         song: DETAIL_PATH.SONG,
         playlist: DETAIL_PATH.PLAYLIST
     },
-    addSongToPlaylistPath: ADD_SONG_TO_PLAYLIST_PATH,
-    playlistDetail: new Map(),
+    editPath: {
+        playlist: {
+            addSongToPlaylist: EDIT_PATH.ADD_SONG_TO_PLAYLIST
+        }
+    }
+
 }
 
 
@@ -228,11 +235,18 @@ const actions = {
             console.log(err)
         }
     },
-    async updatePlaylist(playlistId, songId) {
+    async fetchUpdatePlaylist(playlistId, songId, tags) {
         try {
             const playlist = await this.fetchPlaylistDetail(playlistId);
-            const songIds = playlist.songs.map(song => song.id);
-            songIds.push(songId);
+            let songIds;
+            if (tags === 'remove') {
+                songIds = playlist.songs.map(song => song.id);
+                const index = songIds.indexOf(songId);
+                songIds.splice(index, 1);
+            } else {
+                songIds = playlist.songs.map(song => song.id);
+                songIds.push(songId);
+            }
 
             return await fetch(`${ROUTES.PLAYLIST}/${playlistId}`, {
                 method: 'PATCH',
@@ -246,27 +260,6 @@ const actions = {
         } catch (err) {
             console.error(err);
         }
-    },
-    async removeSongFromPlaylist(playlistId, songId) {
-        try {
-            const playlist = await this.fetchPlaylistDetail(playlistId);
-            const songIds = playlist.songs.map(song => song.id);
-            const index = songIds.indexOf(songId);
-            songIds.splice(index, 1);
-
-            return await fetch(`${ROUTES.PLAYLIST}/${playlistId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    songs: songIds.map(id => `/~morap01/L250/public/index.php/api/songs/${id}`)
-                })
-            });
-        } catch (err) {
-            console.error(err);
-        }
-
     }
 }
 
@@ -281,10 +274,10 @@ const store = {
         return state.detailPath;
     },
     get playlists() {
-        return state.playlists;
+        return state.playlists.reverse();
     },
-    get addSongToPlaylistPath() {
-        return state.addSongToPlaylistPath;
+    get editPath() {
+        return state.editPath;
     },
     getArtistDetail({id}) {
         return state.artistDetail.get(id);
@@ -296,6 +289,9 @@ const store = {
     getSongDetail({id}) {
 
         return state.songDetail.get(id)
+    },
+    getPlaylistDetail({id}) {
+        return state.playlistDetail.get(id)
     },
     getAutocompletion(event, filter) {
         return actions.fetchAutocompletion(event, filter)
@@ -333,6 +329,11 @@ const store = {
             state.songDetail.set(id, await actions.fetchSongDetail(id));
         }
     },
+    async INITIALIZE_PLAYLIST_DETAIL({id}) {
+        if (!state.songDetail.has(id)) {
+            state.playlistDetail.set(id, await actions.fetchPlaylistDetail(id));
+        }
+    },
     async createPlaylist(value) {
         try {
             const playlist = await actions.fetchCreatePlaylist(value);
@@ -344,18 +345,8 @@ const store = {
             console.error(error);
         }
     },
-    updatePlaylist(playlistId, songId) {
-        return actions.updatePlaylist(playlistId, songId);
-
-    },
-    async INITIALIZE_PLAYLIST_DETAIL({id}) {
-        state.playlistDetail.set(id, await actions.fetchPlaylistDetail(id));
-    },
-    getPlaylistDetail({id}) {
-        return state.playlistDetail.get(id);
-    },
-    removeSongFromPlaylist(id, songId) {
-        return actions.removeSongFromPlaylist(id, songId);
+    async updatePlaylist(playlistId, songId, tags) {
+        await actions.fetchUpdatePlaylist(playlistId, songId, tags)
     }
 }
 

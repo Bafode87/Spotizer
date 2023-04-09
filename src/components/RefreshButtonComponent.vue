@@ -10,7 +10,3 @@
         </svg>
     </symbol>
 </template>
-
-<script setup>
-
-</script>

@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import router from './../router/index' ;
+import router from '@/router/index' ;
 
 function back() {
     router.go(-1)
