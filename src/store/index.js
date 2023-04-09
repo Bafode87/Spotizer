@@ -305,6 +305,9 @@ const store = {
                 }),
                 actions.fetchArtistsToDiscover().then((artists) => {
                     state.artistsToDiscover = artists;
+                }),
+                actions.fetchPlaylist().then((playlists) => {
+                    state.playlists = playlists;
                 })
             ])
         }
