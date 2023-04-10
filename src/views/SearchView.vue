@@ -6,7 +6,7 @@
                 v-on:keyup="search"
                 type="text"
                 id="search"
-                placeholder="Artistes, albums ou titres..."
+                placeholder="Albums, artistes, titres ou playlists..."
         />
         <div class="filters">
             <label v-for="(option, index) in filterOptions" :key="index" class="button__filters">
