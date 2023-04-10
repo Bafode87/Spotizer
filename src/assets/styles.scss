@@ -364,7 +364,9 @@ h3 {
 
 .filters {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1em;
 }
 
 button, .button__filters {
