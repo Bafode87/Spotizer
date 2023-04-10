@@ -6,6 +6,7 @@
                 <div>
                     <p>{{item.title}}</p>
                     <p v-if="props.artist" class="item__subtitle">{{ props.artist }}</p>
+                    <p v-if="item.artist" class="item__subtitle">{{ item.artist.name }}</p>
                     <p v-else class="item__subtitle">{{ item.name }}</p>
                 </div>
                 </router-link>

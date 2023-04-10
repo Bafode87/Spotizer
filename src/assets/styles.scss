@@ -17,7 +17,7 @@ body {
   background-color: var(--color-background);
 }
 
-a, button {
+a, button, .backIcon, .playlistRemoveIcon {
   cursor: pointer;
 }
 
@@ -205,7 +205,7 @@ h3 {
   color: white;
 }
 
-.list .item  {
+.list .item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -283,6 +283,16 @@ h3 {
   align-items: center;
   height: calc(100% - 70px);
   justify-content: center;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 30rem;
+  iframe {
+    width: 100%;
+    height: 100%;
+    max-width: 30rem;
+    max-height: 30rem;
+    border-radius: 10px;
+  }
 }
 
 .info__songDetail {
@@ -291,9 +301,10 @@ h3 {
   justify-content: space-between;
   margin-top: 2em;
   color: white;
+  width: 100%;
 }
 
-.title__songDetail {
+.albumTitle__songDetail {
   font-size: 1em;
   font-weight: bold;
 }
@@ -304,9 +315,15 @@ h3 {
   color: white;
   text-align: center;
   margin: 1em 0;
+
   .title__songDetail {
     font-weight: bold;
   }
+}
+
+.artist__songDetail {
+  text-decoration: none;
+  color: white;
 }
 
 // Playlist detail view
@@ -426,11 +443,11 @@ button, .button__filters {
 }
 
 
-.blur-content{
-  filter: blur(5px); 
+.blur-content {
+  filter: blur(5px);
 }
 
-// no data 
+// no data
 
 .nodata {
   display: flex;
