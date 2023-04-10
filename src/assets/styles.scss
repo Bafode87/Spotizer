@@ -409,9 +409,11 @@ button, .button__filters {
   bottom: 10px;
   float: right;
   transition: opacity 0.3s ease-in-out;
+  visibility: hidden;
 
   &.show {
     opacity: 1;
+    visibility: visible;
   }
 }
 

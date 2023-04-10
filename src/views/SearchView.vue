@@ -24,33 +24,29 @@
     </header>
     <main class="main__search">
         <Suspense>
-            <template v-if="selectedFilter && searchData.length > 0">
+            <div v-if="selectedFilter && searchData.length > 0">
                 <CardListComponent
                         :data="searchData"
                         :nodata="`Aucun résultat.`"
                         orientation="vertical"
                         :detailPath="detailPath"
                 />
-            </template>
-            <template v-else-if="selectedFilter">
-                <div class="search__noresults">Aucun résultat.</div>
-            </template>
-            <template v-else>
-                <div class="search__results">
-                <template v-for="search in searchResults">
+            </div>
+            <div v-else class="search__results">
+                <div v-for="search in searchResults">
                     <div v-if="search.data.length > 0">
                         <h3 class="search__results__title">{{ search.title }}</h3>
                         <Suspense>
-                            <CardListComponent :data="search.data" :detailPath="search.path" :nodata="search.nodata"/>
+                            <CardListComponent :data="search.data" :detailPath="search.path"
+                                               :nodata="search.nodata"/>
                             <template #fallback>
                                 <div class="loading">Chargement...</div>
                             </template>
                         </Suspense>
                     </div>
-                </template>
-                <div v-if="!searchResults.length" class="search__noresults">Aucun résultat.</div>
                 </div>
-            </template>
+                <div v-if="!searchResults.length" class="search__noresults">Aucun résultat.</div>
+            </div>
             <template #fallback>
                 <div class="loading">Chargement...</div>
             </template>
