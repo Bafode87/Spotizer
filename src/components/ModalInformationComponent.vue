@@ -26,7 +26,6 @@ const props = defineProps ({
         required: true
     }
 })
-console.log(props);
 const emits = defineEmits(['close'])
 
 function leave () {

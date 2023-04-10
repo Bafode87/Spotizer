@@ -178,7 +178,7 @@ const actions = {
         let allResults = [];
 
         while (true) {
-            const response = await fetch(`${ROUTES[filter]}?page=${currentPage}&${SEARCH_PARAMETERS[filter]}=${event.target.value.trim()}`);
+            const response = await fetch(`${ROUTES[filter]}?page=${currentPage}&${SEARCH_PARAMETERS[filter]}=${event.trim()}`);
             const data = await response.json();
 
             if (data.length === 0) {
@@ -186,10 +186,8 @@ const actions = {
             }
 
             if (filter === 'ARTIST') {
-                console.log('oui');
                 for (const artist in data) {
-                    data[artist].image = ARTIST_IMAGE
-                    console.log(data[artist]);
+                    data[artist].image = ARTIST_IMAGE;
                 }
             }
 
@@ -350,6 +348,9 @@ const store = {
     },
     async updatePlaylist(playlistId, songId, tags) {
         await actions.fetchUpdatePlaylist(playlistId, songId, tags)
+    },
+    getPlaylists(value) {
+        return state.playlists.filter(playlist => playlist.name.toLowerCase().includes(value.toLowerCase()))
     }
 }
 

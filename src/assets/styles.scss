@@ -17,7 +17,7 @@ body {
   background-color: var(--color-background);
 }
 
-a, button, .backIcon, .playlistRemoveIcon {
+a, button, .backIcon, .playlistRemoveIcon, .upwardIcon {
   cursor: pointer;
 }
 
@@ -91,6 +91,20 @@ h3 {
 // Search view
 .main__search {
   margin-bottom: 70px;
+}
+.search__results__title {
+  color: white;
+  padding: var(--spacing-1);
+}
+
+.search__results {
+  margin-bottom: 6rem;
+}
+
+.search__noresults {
+  text-align: center;
+  color: white;
+  margin-top: 2rem;
 }
 
 .search__header {
@@ -286,6 +300,7 @@ h3 {
   margin: 0 auto;
   width: 90%;
   max-width: 30rem;
+
   iframe {
     width: 100%;
     height: 100%;
@@ -389,10 +404,11 @@ button, .button__filters {
 .upwardIcon {
   z-index: 10;
   position: sticky;
-  bottom: 40px;
-  float: right;
   color: orange;
   opacity: 0;
+  bottom: 10px;
+  float: right;
+  transition: opacity 0.3s ease-in-out;
 
   &.show {
     opacity: 1;
