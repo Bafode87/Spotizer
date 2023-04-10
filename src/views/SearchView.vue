@@ -19,7 +19,7 @@
                 />
                 {{ option.label }}
             </label>
-            <button v-if="selectedFilter" @click="clearFilter">Effacer le filtre</button>
+            <button class="clearFilterBtn" v-if="selectedFilter" @click="clearFilter">Effacer le filtre</button>
         </div>
     </header>
     <main class="main__search">
